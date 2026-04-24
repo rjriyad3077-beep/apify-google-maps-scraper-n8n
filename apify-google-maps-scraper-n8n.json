@@ -1,0 +1,183 @@
+{
+  "name": "apify-google-maps-scraper-n8n",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2962e2e6-16a1-4e55-81a3-544f85bc526e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "dbf86cce-540d-4b26-bc2a-2ed0949c1268",
+      "name": "Wait",
+      "webhookId": "8d6d0fc8-e59b-4e7e-9362-bd9d990581d2"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs/last/dataset/items?token=apify_api_IDLgajPMPZb7hmIdAMzx0TS0a6iLsb0FJSXX",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1088,
+        -16
+      ],
+      "id": "d0cca6b5-258c-480e-86eb-3bddedf377b2",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=apify_api_IDLgajPMPZb7hmIdAMzx0TS0a6iLsb0FJSXX",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"searchStringsArray\": [\n    \"restaurant in Manhattan New York\",\n    \"pizza restaurant New York\",\n    \"burger restaurant New York\"\n  ],\n  \"maxCrawledPlacesPerSearch\": 5\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0da0c34e-048b-451d-b066-4d9144eb3ea8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs/last?token=apify_api_IDLgajPMPZb7hmIdAMzx0TS0a6iLsb0FJSXX",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "96760595-6227-485a-be44-dba99bb4f250",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ea1cfa11-2121-4810-973b-03c07e58e24a",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "SUCCEEDED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        0
+      ],
+      "id": "9abf04ab-048f-4034-82ad-e377c1bfd3b5",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7352afd0-b50d-4fc6-8571-9b3e2a4f545f",
+  "meta": {
+    "instanceId": "50918ee0be4fd9ad8edd59da0eb4c4a6502c186d6a425a1cf635ba824838446e"
+  },
+  "id": "7WmrrhO6edU6sXIE",
+  "tags": []
+}
