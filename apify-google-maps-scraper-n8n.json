@@ -41,7 +41,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=apify_api_IDLgajPMPZb7hmIdAMzx0TS0a6iLsb0FJSXX",
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=xxx",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "{\n  \"searchStringsArray\": [\n    \"restaurant in Manhattan New York\",\n    \"pizza restaurant New York\",\n    \"burger restaurant New York\"\n  ],\n  \"maxCrawledPlacesPerSearch\": 5\n}",
@@ -58,7 +58,7 @@
     },
     {
       "parameters": {
-        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs/last?token=apify_api_IDLgajPMPZb7hmIdAMzx0TS0a6iLsb0FJSXX",
+        "url": "https://api.apify.com/v2/acts/compass~crawler-google-places/runs/last?token=xxx",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
